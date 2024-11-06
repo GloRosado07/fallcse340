@@ -1,6 +1,457 @@
+/*
+#1A1D2F - Deep Space Blue
+#2A416D - Dark Cerulean
+#547AA5 - Steel Blue
+#A5BCD9 - Powder Blue
+#F0F8FF - Alice Blue
+
+Fonts
+-Titles
+font-family: "Varela Round", sans-serif;
+
+-Text box
+font-family: "Ubuntu", sans-serif;
+
+*/
+
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+* {
+  font-family: "Ubuntu", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*** Mobile Screen ***/
+/** Header **/
+.siteName {
+  padding: 1em;
+}
+
+.siteName a {
+  font-family: "Varela Round", sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: black;
+}
+
+#tools {
+  margin-top: 0.5em;
+}
+
+#tools a {
+  font-family: "Ubuntu", sans-serif;
+  color: black;
+  text-transform: uppercase;
+  display: block;
+  text-align: end;
+  margin-top: 5px;
+}
+
+
+
+
+#top-header {
+
+  display: flex;
+  justify-content: space-around; 
+  
+}
+
+
+/* Navigation */
+#wrapper nav ul {
+  display: flex;
+  justify-content: space-around;
+  background-color: #A5BCD9;
+  padding: 0;
+  text-align: center;
+  }
+
+#wrapper nav ul li {
+  list-style-type: none;
+  font-size: 20px;
+}
+
+#wrapper nav ul li a {
+  display: block;
+  padding: 0.5em;
+  color: #1A1D2F;
+}
+
+#wrapper nav ul li a:hover {
+  background-color: #547AA5;
+  color: #547AA5;
+}
+
+/** Main **/
+
+main {
+  margin: 1em;
+}
+
+
+h1 {
+  font-size: 1.3em;
+}
+
+/* Hero */
+
+.hero-message {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.336);
+  color: #2A416D ;
+  position: absolute;
+  padding: 0.1em;
+  max-width: 40%;
+}
+
+.hero-message h2 {
+  margin: 0;
+  font-size: 1.3em;
+}
+
+.hero-message span {
+  margin: 0.1em;
+  font-size: 1em;
+}
+
+.hero-message a {
+  margin: 0.5em;
+  padding: 0.5em 1.2em;
+  background: #2A416D ;
+  color: white;
+  text-align: center;
+
+}
+
+
+.hero img {
+  width: 100%;
+}
+
+/* Spotlights */
+
+.spotlights {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reviews */
+
+.reviews ul {
+  padding: 0 20px;
+  margin: 2em 0;
+}
+
+.reviews li {
+  margin: 10px 0;
+}
+
+/* Upgrades */
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.upgrades h2 {
+  grid-column: 1/3;
+}
+
+.upgrades div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.upgrades figure {
+  background-color: #406E8E ;
+  border: black 1px solid;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.upgrades img {
+  margin-top: 10px;
+}
+
+.upgrades a {
+  color: #23395B ;
+}
+
+/* Classification View */
+#inv-display {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#inv-display li {
+  list-style-type: none;
+  margin: 5px auto;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#inv-display li a img {
+  max-width: 200px;
+}
+
+.namePrice {
+  padding: 20px 0;
+}
+
+.namePrice hr {
+  height: 2px;
+  background-color: black;
+}
+
+.namePrice h2 {
+  display: block;
+  max-width: 200px;
+  max-height: 18px;
+  font-size: 100%;
+}
+
+.namePrice span {
+  display: block;
+}
+
+/* Car detail view */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.productInfo img {
+  max-width: 100%;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column; 
+  justify-content: flex-start;
+  max-width: 500px;
+  padding: 0 2em;
+}
+
+.productInfo h2 {
+  font-size: 1.2em;
+  margin: 10px 0 0 0 ;
+}
+
+.detailPrice,
+.detailMiles {
+  padding: 0.5em;
+}
+
+.productDetails p,
+.detailColor {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #406E8E ;
+}
+
+.detailPrice {
+  text-align: end;
+  font-size: 1.5em;
+}
+
+/* Error View */
+.errorView {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.errorView img {
+  max-width: 100%;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 320px;
+}
+form label,
+form input,
+form textarea,
+form span {
+  display: block;
+  width: 100%;
+}
+
+form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+form span {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.form-submit {
+  margin-top: 20px;
+}
+
+/* Password Form */
+#passwordUpdateForm {
+  margin-top: 10px;
+}
+
+.validated-form input:required:valid,
+.validated-form select:required:valid,
+.validated-form textarea:required:valid {
+    border: 2px solid green;
+}
+.validated-form input:required,
+.validated-form select:required,
+.validated-form textarea:required {
+    border: 2px solid red;
+}
+
+/* Flash notice */
+.notice {
+  color: rgba(255, 0, 0, 0.76);
+  font-weight: bold;
+  font-style: italic;
+}
+
+.management-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.management-view a, 
+.management-view span {
+  display: block;
+  margin: 10px;
+}
+
+/* Reviews List */
+.customerReview ul {
+  padding-left: 20px;
+}
+
+.customerReview li {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.reviewDate {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.reviewText {
+  font-style: italic;
+}
+
+
+/* ************ */
+/* Large Screen */
+/* ************ */
+@media screen and (min-width: 39.99em) {
+  
+  /* Body */
+  body {
+    display: flex;
+    justify-content: center;
+    background-image: url("../images/site/small_check.jpg");
+  }
+
+
+  #top-header {
+    justify-content: space-between;
+  }
+
+  .siteName a {
+    font-size: 2em;
+  }
+  /* Header */
+  #wrapper {
+    background-color: white;
+    padding: 2em;
+    margin: 1em;
+    border: #406E8E   5px solid;
+    border-radius: 20px;
+  }
+
+  /* Hero */
+
+  .hero img {
+    display: block;
+    max-width: 75%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .hero-message {
+    margin-top: 20px;
+  }
+  
+  .hero-message h2 {
+    font-size: 2em;
+  }
+
+  .hero-message span {
+    font-size: 1.3em;
+  }
+
+  /* Spotlights */
+
+  .spotlights {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .upgrades,
+  .reviews {
+    padding: 10px;
+  }
+
+  /* Classification View */
+  #inv-display {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #inv-display li {
+    margin: 10px;
+    
+  }
+
+  /* Error View */
+  .errorView img {
+  max-width: 500px;
+  margin: 0 auto;
+  }
 }
