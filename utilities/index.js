@@ -59,6 +59,73 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the car details view HTML
+* ************************************ */
+Util.buildByInvId = async function(data){
+  let details
+  if(Object.keys(data).length > 0){
+    details = '<div class="productInfo">'
+    details += '<img src="' + data.inv_image + '" alt="Image of ' + data.inv_make + ' ' + data.inv_model + '">'
+    details += '<div class="productDetails">'
+    details += '<h2>' + data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model + ' Details</h2>'
+    details += '<span class="detailPrice"><b>Price:</b> $'+ new Intl.NumberFormat('en-US').format(data.inv_price) + '</span>'
+    details += '<p><b>Description:</b> ' + data.inv_description + '</p>'
+    details += '<span class="detailMiles"><b>Miles:</b> ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</span>'
+    details += '<span class="detailColor"><b>Color:</b> ' + capitalizeWord(data.inv_color) + '</span>'
+    details += '</div>'
+    details += '</div>'
+  } else {
+    details = '<p class="notice">Sorry, the vehicle could not be found.</p>'
+  }
+  return details
+}
+
+/* **************************************
+* Build the 404 not found error view
+* ************************************ */
+Util.buidNotFoundView = async function(message){
+  let background = '<div class=errorView>'
+  background += '<h2>' + message + '</h2>'
+  background += '<img src="/images/site/not-found-error.jpg" alt=not-found-error-message-image>'
+  background += '</div>'
+  return background
+}
+
+
+/* **************************************
+* Build the classification list week3
+* ************************************ */
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
+
+/* ****************************************
+ * Word functions week3
+ **************************************** */
+function capitalizeWord(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function createScreenName(firstname, lastname) {
+  return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase() + lastname.slice(1)
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
