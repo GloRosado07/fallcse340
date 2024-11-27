@@ -297,7 +297,8 @@ form {
   border: 2px solid black;
   border-radius: 5px;
   padding: 10px;
-  max-width: 320px;
+  max-width: 350px;
+  background-color: #A5BCD9;
 }
 form label,
 form input,
