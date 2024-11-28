@@ -2,7 +2,6 @@ const invModel = require("../models/inventory-model")
 const Util = {}
 
 
-
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -103,8 +102,9 @@ Util.buidErrorView = async function(message){
   return background
 }
 
+
 /* **************************************
-* Build the management view
+* Build the management view week4
 * ************************************ */
 Util.buildManagementView = async function(){
   let manageItems = '<div class=manageItems>'
@@ -118,7 +118,7 @@ Util.buildManagementView = async function(){
 }
 
 /* **************************************
-* Build the classification list
+* Build the classification list week3
 * ************************************ */
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
@@ -140,8 +140,6 @@ Util.buildClassificationList = async function (classification_id = null) {
 }
 
 
-
-
  /* ****************************************
  *  Check Login
  * ************************************ */
@@ -155,7 +153,7 @@ Util.buildClassificationList = async function (classification_id = null) {
  }
 
 /* ****************************************
- * Word functions
+ * Word functions week3
  **************************************** */
 function capitalizeWord(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -165,11 +163,13 @@ function createScreenName(firstname, lastname) {
   return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase() + lastname.slice(1)
 }
 
- /* ****************************************
+//UP TO HERE WEEK 3//
+
+/* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
+  
 module.exports = Util
