@@ -1,16 +1,16 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-      res.redirect('/')
-    } %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
 
 <%- messages() %>
 
 <%- invManagement %>
 
-<!-- <h2>Manage Inventory</h2>
+<h2>Manage Inventory</h2>
 <p>Select a classification from the list</p>
 
-<%# %- classificationSelect %>--
+<%- classificationSelect %>--
 
-<table id="inventoryDisplay"></table> -->
+<table id="inventoryDisplay"></table>
