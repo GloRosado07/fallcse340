@@ -1,6 +1,8 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
+
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -24,8 +26,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -41,7 +41,7 @@ Util.buildClassificationGrid = async function(data){
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors"></a>'
       grid += '<div class="namePrice">'
-      grid += '<hr />'
+      grid += '<hr>'
       grid += '<h2>'
       grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
@@ -92,9 +92,33 @@ Util.buidNotFoundView = async function(message){
   return background
 }
 
+/* **************************************
+* Build the error server view
+* ************************************ */
+Util.buidErrorView = async function(message){
+  let background = '<div class=errorView>'
+  background += '<h2>' + message + '</h2>'
+  background += '<img src="/images/site/server-error.jpg" alt=error-message-image>'
+  background += '</div>'
+  return background
+}
 
 /* **************************************
-* Build the classification list week3
+* Build the management view
+* ************************************ */
+Util.buildManagementView = async function(){
+  let manageItems = '<div class=manageItems>'
+
+  manageItems += '<a href="./inv/inventory/add-classification">Add New Classification</a>'
+  manageItems += '<br>'
+  manageItems += '<a href="./inv/inventory/add-inventory">Add New Vehicle</a>'
+  
+  manageItems += '</div>'
+  return manageItems
+}
+
+/* **************************************
+* Build the classification list
 * ************************************ */
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
@@ -115,8 +139,23 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
+
+
+
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
 /* ****************************************
- * Word functions week3
+ * Word functions
  **************************************** */
 function capitalizeWord(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -126,7 +165,7 @@ function createScreenName(firstname, lastname) {
   return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase() + lastname.slice(1)
 }
 
-/* ****************************************
+ /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling

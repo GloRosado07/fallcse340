@@ -24,6 +24,8 @@ router.get("/register",
     // Process the registration data
 router.post(
     "/register",
+    regValidate.registationRules(),
+    regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
   )
 
@@ -43,11 +45,9 @@ router.post(
 
   // Process the registration data
 router.post(
-  "/register",
-  regValidate.registationRules(),
-  regValidate.checkRegData,
-  utilities.handleErrors(accountController.registerAccount)
-)
+    "/register",
+    utilities.handleErrors(accountController.registerAccount)
+  )
 
 router.post('/register', utilities.handleErrors(accountController.registerAccount))
 

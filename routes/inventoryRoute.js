@@ -8,6 +8,12 @@ const utilities = require("../utilities/")
 *  GET Routes
 * ********************************* */
 
+// Route to inventory management
+router.get("/", 
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.buildManagementView)
+);
+
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
@@ -16,6 +22,18 @@ router.get("/detail/:invId", utilities.handleErrors(invController.buildByInvId))
 
 // Inexistent route for 500-type error
 router.get("/faildirection", utilities.handleErrors(invController.badFunction))
+
+// Route to build add classification view
+router.get("/inventory/add-classification",
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.buildAddClassView)
+    );
+
+// Route to build add vehicle view
+router.get("/inventory/add-inventory",
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.buildAddVehicleView)
+    );
 
 // Route to build inventory view
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
@@ -26,9 +44,11 @@ router.get("/edit/:invId",
     utilities.handleErrors(invController.buildEditByInvId)
     );
 
+
 /*  **********************************
 *  POST Routes
 * ********************************* */
+
 // Route for register a new classification
 router.post(
     "/inventory/add-classification",
@@ -36,6 +56,18 @@ router.post(
     utilities.handleErrors(invController.addClassification)
 );
 
+// Route to add a vehicle
+router.post(
+    "/inventory/add-inventory",
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.addVehicle)
+);
+
+// Update vehicle data
+router.post(
+    "/update/",
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.updateInventory))
 
 
 module.exports = router;
