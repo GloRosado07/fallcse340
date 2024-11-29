@@ -26,7 +26,7 @@ router.get("/faildirection", utilities.handleErrors(invController.badFunction))
 
 // Route to build add classification view
 router.get("/inventory/add-classification",
-    //utilities.checkLogin,
+    utilities.checkLogin,
     utilities.handleErrors(invController.buildAddClassView)
     );
 
