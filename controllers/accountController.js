@@ -81,3 +81,4 @@ async function registerAccount(req, res) {
     buildRegister,
     registerAccount 
 }
+

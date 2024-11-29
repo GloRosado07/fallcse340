@@ -1,25 +1,12 @@
+<%# ASSIGMEMENT #3 %>
+
+
 <% if (title) { %>
   <h1><%= title %></h1>
   <% } else {
     res.redirect('/')
   } %>
 
-
-
-<%- details %>
-
-<h3>Customer Reviews</h3>
-<%- customerReviews %>
-
-<%- messages() %>
-
-<% if (errors) { %>
-<ul class="notice">
-<% errors.array().forEach(error => { %>
- <li><%= error.msg %></li>
-<%  }) %>
-</ul>
-<% } %>
 
 
 <%- details %>

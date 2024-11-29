@@ -10,7 +10,13 @@
 
 <% /* UP TO HERE WEEK 4 LOGIN */ %>
 
-
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
 
 <form id="loginForm" action="/account/login" method="post" class="validated-form">
   
