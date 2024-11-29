@@ -41,7 +41,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 // Route to build edit view by inventory id
 router.get("/edit/:invId", 
-    //utilities.checkLogin,
+    utilities.checkLogin,
     utilities.handleErrors(invController.buildEditByInvId)
     );
 
@@ -53,7 +53,7 @@ router.get("/edit/:invId",
 // Route for register a new classification
 router.post(
     "/inventory/add-classification",
-    //utilities.checkLogin,
+    utilities.checkLogin,
     invValidate.classificationRules(),
     invValidate.checkClassData,
     utilities.handleErrors(invController.addClassification)
