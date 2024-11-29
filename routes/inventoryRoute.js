@@ -11,7 +11,7 @@ const invValidate = require('../utilities/inventory-validation')
 
 // Route to inventory management
 router.get("/", 
-    //utilities.checkLogin,
+    utilities.checkLogin,
     utilities.handleErrors(invController.buildManagementView)
 );
 
