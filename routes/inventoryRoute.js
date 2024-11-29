@@ -3,7 +3,6 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
-const invValidate = require('../utilities/inventory-validation')
 
 /*  **********************************
 *  GET Routes
@@ -26,13 +25,13 @@ router.get("/faildirection", utilities.handleErrors(invController.badFunction))
 
 // Route to build add classification view
 router.get("/inventory/add-classification",
-    // utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildAddClassView)
     );
 
 // Route to build add vehicle view
 router.get("/inventory/add-inventory",
-    // utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildAddVehicleView)
     );
 
@@ -41,7 +40,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 // Route to build edit view by inventory id
 router.get("/edit/:invId", 
-    // utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildEditByInvId)
     );
 
@@ -53,27 +52,21 @@ router.get("/edit/:invId",
 // Route for register a new classification
 router.post(
     "/inventory/add-classification",
-    // utilities.checkLogin,
-    invValidate.classificationRules(),
-    invValidate.checkClassData,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.addClassification)
 );
 
 // Route to add a vehicle
 router.post(
     "/inventory/add-inventory",
-    // utilities.checkLogin,
-    invValidate.inventoryRules(),
-    invValidate.checkInventoryData,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.addVehicle)
 );
 
 // Update vehicle data
 router.post(
     "/update/",
-    // utilities.checkLogin,
-    invValidate.inventoryRules(),
-    invValidate.checkUpdateData,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.updateInventory))
 
 

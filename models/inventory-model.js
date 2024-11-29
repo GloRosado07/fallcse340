@@ -67,6 +67,8 @@ async function checkExistingClassification(classification_name) {
   }
 }
 
+//UP TO HERE WEEK 3//
+
 /* ***************************
  *  Add a new vehicle
  * ************************** */
@@ -134,30 +136,11 @@ async function updateVehicle(
   }
 }
 
-
-/* ***************************
- *  Delete a vehicle's data
- * ************************** */
-async function deleteVehicle(
-  inv_id) {
-  try {
-    const sql = 'DELETE FROM inventory WHERE inv_id = $1'
-    const data = await pool.query(sql, [
-      inv_id])
-      return data
-  } catch (error) {
-    return "Delete Inventory Error"
-  }
-}
-
-
-module.exports = {
-  getClassifications,
-  getInventoryByClassificationId,
+module.exports = {getClassifications, 
+  getInventoryByClassificationId, 
   getCarDetailsByInvId,
   addClassification,
   checkExistingClassification,
   addVehicle,
-  updateVehicle,
-  deleteVehicle,
-}
+  updateVehicle
+};
