@@ -3,6 +3,7 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
+const invValidate = require('../utilities/inventory-validation')
 
 /*  **********************************
 *  GET Routes
@@ -53,6 +54,8 @@ router.get("/edit/:invId",
 router.post(
     "/inventory/add-classification",
     utilities.checkLogin,
+    invValidate.classificationRules(),
+    invValidate.checkClassData,
     utilities.handleErrors(invController.addClassification)
 );
 
@@ -60,6 +63,8 @@ router.post(
 router.post(
     "/inventory/add-inventory",
     utilities.checkLogin,
+    invValidate.inventoryRules(),
+    invValidate.checkInventoryData,
     utilities.handleErrors(invController.addVehicle)
 );
 
@@ -67,12 +72,16 @@ router.post(
 router.post(
     "/update/",
     utilities.checkLogin,
+    invValidate.inventoryRules(),
+    invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
 // Delete vehicle data
 router.post(
     "/delete/",
     utilities.checkLogin,
+    invValidate.addReviewRules(),
+    invValidate.checkAddNewReview,
     utilities.handleErrors(invController.deleteInventory))
 
 
