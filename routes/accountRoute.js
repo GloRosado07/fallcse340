@@ -12,7 +12,7 @@ const regValidate = require('../utilities/account-validation')
 
 // Route to root
 router.get("/",
-  //utilities.checkLogin,
+  utilities.checkLogin,
   utilities.handleErrors(accountController.buildAccountRootView)
   );
 
