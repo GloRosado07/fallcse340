@@ -11,13 +11,11 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const className = data[0].classification_name
   res.render("./inventory/classification", {
     title: className + " vehicles",
     errors: null,
     nav,
-    userData,
     grid,
   })
 }
@@ -30,62 +28,50 @@ invCont.buildByInvId = async function (req, res, next) {
   const data = await invModel.getCarDetailsByInvId(inv_id)
   const details = await utilities.buildByInvId(data)
 
-  // render customer reviews
-  const reviews = await invModel.getReviewsByInvId(inv_id)
-  const customerReviews = await utilities.buildCustomerReview(reviews)
-
-  // render add new review
-  const addNewReview = await utilities.buildAddReview(req)
-
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const carName = data.inv_make + ' ' + data.inv_model
   res.render("./inventory/details", {
     title:carName,
     errors: null,
     nav,
-    userData,
     details,
-    customerReviews,
-    addNewReview,
   })
 }
 
 /* ***************************
- *  Build management view
+ *  Build management view  week 4 assigment
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   const invManagement = await utilities.buildManagementView()
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const classificationSelect = await utilities.buildClassificationList()
 
   res.render("./inventory/management", {
     title:"Vehicle Management",
     errors: null,
     nav,
-    userData,
     invManagement,
     classificationSelect,
   })
 }
 
+  
 /* ***************************
  *  Build add classification view
  * ************************** */
 invCont.buildAddClassView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   res.render("./inventory/add-classification", {
     title:"Add Classification",
     errors: null,
     nav,
-    userData,
   })
 }
 
+//UP TO HERE WEEK 3//
+
 /* ****************************************
-*  Add new classification
+*  Add new classification week4
 * *************************************** */
 invCont.addClassification = async function (req, res, next) {
   
@@ -95,7 +81,7 @@ invCont.addClassification = async function (req, res, next) {
   )
 
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
+
 
   if (addClassResult) {
     req.flash(
@@ -109,23 +95,21 @@ invCont.addClassification = async function (req, res, next) {
       title: "Add Classification",
       errors: null,
       nav,
-      userData,
     })
   }
 }
+
 
 /* ***************************
  *  Build add vehicle view
  * ************************** */
 invCont.buildAddVehicleView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const classificationList = await utilities.buildClassificationList()
   res.render("./inventory/add-inventory", {
     title:"Add Inventory",
     errors: null,
     nav,
-    userData,
     classificationList,
   })
 }
@@ -135,7 +119,6 @@ invCont.buildAddVehicleView = async function (req, res, next) {
 * *************************************** */
 invCont.addVehicle = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const { 
     classification_id,
     inv_make,
@@ -174,7 +157,6 @@ invCont.addVehicle = async function (req, res, next) {
       title: "Add Inventory",
       errors: null,
       nav,
-      userData,
       classificationList: null,
     })
   }
@@ -188,6 +170,7 @@ invCont.badFunction = async function (req, res, next) {
     title:inexistent
   })
 }
+
 
 /* ***************************
  *  Return Inventory by Classification As JSON
@@ -363,117 +346,5 @@ invCont.deleteInventory = async function (req, res, next) {
   }
 }
 
-/* ****************************************
-*  Add new review
-* *************************************** */
-invCont.addReview = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
-  const { 
-    review_text,
-    inv_id,
-    account_id
-  } = req.body
 
-  const addNewReview = await invModel.addReview(
-    review_text,
-    inv_id,
-    account_id
-  )
-
-  if (addNewReview) {
-    req.flash(
-      "notice",
-      `The review was successfully added.`
-    )
-    res.status(201).redirect(`/inv/detail/${inv_id}`)
-  } else {
-    req.flash("notice", `Sorry, the review couldn't be added.`)
-    res.status(501).render(`/inv/detail/${inv_id}`, {
-
-      errors,
-      title: "Add Vehicle",
-      nav,
-      userData,
-      screen_name,
-      review_text,
-      account_id,
-      inv_id
-
-    })
-  }
-}
-
-
-/* ****************************************
-*  Edit review
-* *************************************** */
-invCont.editReview = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
-  const { 
-    review_id,
-    review_text,
-    inv_id,
-    account_id
-  } = req.body
-
-  const editReview = await invModel.editReview(
-    review_id,
-    review_text,
-    inv_id,
-    account_id
-  )
-
-  if (editReview) {
-    req.flash(
-      "notice",
-      `The review was successfully edited.`
-    )
-    res.status(201).redirect(`/account/`)
-  } else {
-    req.flash("notice", `Sorry, the review couldn't be edited.`)
-    res.status(501).render(`/inv/review/edit-review`, {
-
-      errors,
-      title: "Edit Review",
-      nav,
-      userData,
-      screen_name,
-      review_text,
-      account_id,
-      inv_id
-
-    })
-  }
-}
-
-
-
-/* ************************
- * Format Date
- ************************** */
-function formatDate(date) {
-  const d = new Date(date)
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ]
-
-  const year = d.getFullYear()
-  const monthName = months[d.getMonth()]
-  const day = d.getDate()
-  
-  return `${monthName} ${day}, ${year}` }
-
-module.exports = invCont
+  module.exports = invCont
