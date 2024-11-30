@@ -10,6 +10,13 @@ const regValidate = require('../utilities/account-validation')
 *  GET Routes
 * ********************************* */
 
+// Route to root
+router.get("/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountRootView)
+  );
+
+
 // Route to login view
 router.get("/login",
     utilities.handleErrors(accountController.buildLogin)
