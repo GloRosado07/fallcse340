@@ -77,3 +77,4 @@ validate.checkRegData = async (req, res, next) => {
   
   module.exports = validate
 
+
