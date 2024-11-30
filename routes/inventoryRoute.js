@@ -25,13 +25,13 @@ router.get("/faildirection", utilities.handleErrors(invController.badFunction))
 
 // Route to build add classification view
 router.get("/inventory/add-classification",
-    utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildAddClassView)
     );
 
 // Route to build add vehicle view
 router.get("/inventory/add-inventory",
-    utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildAddVehicleView)
     );
 
@@ -40,7 +40,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 // Route to build edit view by inventory id
 router.get("/edit/:invId", 
-    utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.buildEditByInvId)
     );
 
