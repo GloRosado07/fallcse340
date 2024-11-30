@@ -76,14 +76,6 @@ router.post(
     invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
-// Delete vehicle data
-router.post(
-    "/delete/",
-    utilities.checkLogin,
-    invValidate.addReviewRules(),
-    invValidate.checkAddNewReview,
-    utilities.handleErrors(invController.deleteInventory))
-
 
 module.exports = router;
 
