@@ -179,7 +179,6 @@ invCont.badFunction = async function (req, res, next) {
 invCont.buildEditByInvId = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
 
   const data = await invModel.getCarDetailsByInvId(inv_id)
   const carName = data.inv_make + ' ' + data.inv_model
@@ -188,7 +187,6 @@ invCont.buildEditByInvId = async function (req, res, next) {
   res.render("./inventory/edit-inventory", {
     title:"Edit " + carName,
     nav,
-    userData,
     classificationList,
     errors:null,
     inv_id: data.inv_id,
@@ -210,7 +208,6 @@ invCont.buildEditByInvId = async function (req, res, next) {
 * *************************************** */
 invCont.updateInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   const { 
     inv_id,
     inv_make,
@@ -252,7 +249,6 @@ invCont.updateInventory = async function (req, res, next) {
       title: "Edit Inventory",
       errors: null,
       nav,
-      userData,
       classificationList: classificationList,
       inv_id,
       inv_make,
@@ -275,7 +271,6 @@ invCont.updateInventory = async function (req, res, next) {
 invCont.buildDeleteByInvId = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
 
   const data = await invModel.getCarDetailsByInvId(inv_id)
   const carName = data.inv_make + ' ' + data.inv_model
@@ -283,7 +278,6 @@ invCont.buildDeleteByInvId = async function (req, res, next) {
   res.render("./inventory/delete-confirm", {
     title:"Delete " + carName,
     nav,
-    userData,
     errors:null,
     inv_id: data.inv_id,
     inv_make: data.inv_make,
@@ -298,7 +292,6 @@ invCont.buildDeleteByInvId = async function (req, res, next) {
 * *************************************** */
 invCont.deleteInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let userData = await utilities.getUser(req)
   
   const { 
     inv_id,
@@ -324,7 +317,6 @@ invCont.deleteInventory = async function (req, res, next) {
       title: "Delete Vehicle",
       errors: null,
       nav,
-      userData,
       inv_id,
       inv_make,
       inv_model,
