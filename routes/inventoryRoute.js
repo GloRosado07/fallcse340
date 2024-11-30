@@ -52,14 +52,14 @@ router.get("/edit/:invId",
 // Route for register a new classification
 router.post(
     "/inventory/add-classification",
-    utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.addClassification)
 );
 
 // Route to add a vehicle
 router.post(
     "/inventory/add-inventory",
-    utilities.checkLogin,
+    //utilities.checkLogin,
     utilities.handleErrors(invController.addVehicle)
 );
 
