@@ -68,10 +68,10 @@ app.use("/inv", inventoryRoute)
 //app.use("/account", require("./routes/accountRoute")) week3
 app.use("/account", accountRoute)
 
-// // File Not Found Route - must be last route in list
-// app.use(async (req, res, next) => {
-//   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
-// })
+// File Not Found Route - must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
 
 /* ***********************
  * Local Server Information
