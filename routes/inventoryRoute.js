@@ -69,6 +69,12 @@ router.post(
     //utilities.checkLogin,
     utilities.handleErrors(invController.updateInventory))
 
+// Delete vehicle data
+router.post(
+    "/delete/",
+    //utilities.checkLogin,
+    utilities.handleErrors(invController.deleteInventory))
+
 
 module.exports = router;
 
