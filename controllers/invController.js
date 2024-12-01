@@ -266,28 +266,6 @@ invCont.updateInventory = async function (req, res, next) {
 }
 
 /* ****************************************
-*  Delete inventory view
-* *************************************** */
-invCont.buildDeleteByInvId = async function (req, res, next) {
-  const inv_id = parseInt(req.params.invId)
-  let nav = await utilities.getNav()
-
-  const data = await invModel.getCarDetailsByInvId(inv_id)
-  const carName = data.inv_make + ' ' + data.inv_model
-
-  res.render("./inventory/delete-confirm", {
-    title:"Delete " + carName,
-    nav,
-    errors:null,
-    inv_id: data.inv_id,
-    inv_make: data.inv_make,
-    inv_model: data.inv_model,
-    inv_year: data.inv_year,
-    inv_price: data.inv_price,
-  })
-}
-
-/* ****************************************
 *  Modify vehicle's data
 * *************************************** */
 invCont.deleteInventory = async function (req, res, next) {
