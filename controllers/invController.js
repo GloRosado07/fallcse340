@@ -172,6 +172,18 @@ invCont.badFunction = async function (req, res, next) {
 }
 
 
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
 
 /* ****************************************
 *  Edit inventory view
@@ -179,6 +191,7 @@ invCont.badFunction = async function (req, res, next) {
 invCont.buildEditByInvId = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
+  let userData = await utilities.getUser(req)
 
   const data = await invModel.getCarDetailsByInvId(inv_id)
   const carName = data.inv_make + ' ' + data.inv_model
@@ -187,6 +200,7 @@ invCont.buildEditByInvId = async function (req, res, next) {
   res.render("./inventory/edit-inventory", {
     title:"Edit " + carName,
     nav,
+    userData,
     classificationList,
     errors:null,
     inv_id: data.inv_id,
@@ -201,107 +215,6 @@ invCont.buildEditByInvId = async function (req, res, next) {
     inv_color: data.inv_color,
     classification_id: data.classification_id
   })
-}
-
-/* ****************************************
-*  Modify vehicle's data
-* *************************************** */
-invCont.updateInventory = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  const { 
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_year,
-    inv_miles,
-    inv_color,
-    classification_id
-  } = req.body
-
-  const updateVehicle = await invModel.updateVehicle(
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_year,
-    inv_miles,
-    inv_color,
-    classification_id
-  )
-
-  if (updateVehicle) {
-    req.flash(
-      "notice",
-      `The vehicle ${updateVehicle.inv_make} ${updateVehicle.inv_model} was successfully updated.`
-    )
-    res.status(201).redirect("/inv")
-  } else {
-    const classificationList = await utilities.buildClassificationList(classification_id)
-    req.flash("notice", `Sorry, the ${updateVehicle.inv_make} ${updateVehicle.inv_model} couldn't be updated.`)
-    res.status(501).render("inventory/edit-inventory", {
-      title: "Edit Inventory",
-      errors: null,
-      nav,
-      classificationList: classificationList,
-      inv_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_price,
-      inv_miles,
-      inv_color,
-      classification_id
-    })
-  }
-}
-
-/* ****************************************
-*  Modify vehicle's data
-* *************************************** */
-invCont.deleteInventory = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  
-  const { 
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_price,
-    inv_year,
-  } = req.body
-
-  let invId = parseInt(inv_id)
-
-  const deleteVehicle = await invModel.deleteVehicle(invId)
-
-  if (deleteVehicle) {
-    req.flash(
-      "notice",
-      `The vehicle ${inv_make} ${inv_model} was successfully deleted.`
-    )
-    res.status(201).redirect("/inv")
-  } else {
-    req.flash("notice", `Sorry, the ${inv_make} ${inv_model} couldn't be deleted.`)
-    res.status(501).render("inventory/delete-confirm", {
-      title: "Delete Vehicle",
-      errors: null,
-      nav,
-      inv_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_price,
-    })
-  }
 }
 
   module.exports = invCont

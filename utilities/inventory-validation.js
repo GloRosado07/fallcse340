@@ -36,10 +36,12 @@ validate.classificationRules = () => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
+      let userData = await utilities.getUser(req)
       res.render("inventory/add-classification", {
         errors,
         title: "Add Classification",
         nav,
+        userData,
         classification_name,
       })
       return
@@ -127,10 +129,12 @@ validate.classificationRules = () => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let userData = await utilities.getUser(req)
     res.render("inventory/add-inventory", {
       errors,
       title: "Add Vehicle",
       nav,
+      userData,
       classificationList,
       inv_make,
       inv_model,
@@ -155,10 +159,12 @@ validate.classificationRules = () => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let userData = await utilities.getUser(req)
     res.render("inventory/edit-inventory", {
       errors,
       title: "Edit Vehicle",
       nav,
+      userData,
       classificationList,
       inv_make,
       inv_model,
@@ -173,6 +179,34 @@ validate.classificationRules = () => {
   }
   next()
 }
+
+  /*  **********************************
+  *  Add new review Validation Rules
+  * ********************************* */
+
+  validate.addReviewRules = () => {
+    return [         
+        body("review_text")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 10 })
+        .withMessage("The review should have at least 10 characters."), // on error this message is sent.
+
+        body("account_id")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Invalid account."), // on error this message is sent.
+
+        body("inv_id")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Invalid article."), // on error this message is sent.
+
+    ]
+  }
 
 
 module.exports = validate

@@ -136,12 +136,11 @@ async function updateVehicle(
   }
 }
 
-
 module.exports = {getClassifications, 
   getInventoryByClassificationId, 
   getCarDetailsByInvId,
   addClassification,
   checkExistingClassification,
   addVehicle,
-  updateVehicle,
+  updateVehicle
 };
