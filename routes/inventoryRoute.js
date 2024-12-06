@@ -101,5 +101,15 @@ router.post(
     utilities.handleErrors(invController.deleteInventory))
 
 
+// Route to add a review
+router.post(
+    "/review/add-review/:invId",
+    utilities.checkLogin,
+    invValidate.addReviewRules(),
+    invValidate.checkAddNewReview,
+    utilities.handleErrors(invController.addReview)
+);
+
+
 
 module.exports = router;
