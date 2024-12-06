@@ -3,6 +3,8 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
+const invValidate = require('../utilities/inventory-validation')
+const authZ = require("../utilities/account-permission")
 
 /*  **********************************
 *  GET Routes
@@ -10,7 +12,8 @@ const utilities = require("../utilities/")
 
 // Route to inventory management
 router.get("/", 
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
     utilities.handleErrors(invController.buildManagementView)
 );
 
@@ -25,13 +28,15 @@ router.get("/faildirection", utilities.handleErrors(invController.badFunction))
 
 // Route to build add classification view
 router.get("/inventory/add-classification",
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
     utilities.handleErrors(invController.buildAddClassView)
     );
 
 // Route to build add vehicle view
 router.get("/inventory/add-inventory",
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
     utilities.handleErrors(invController.buildAddVehicleView)
     );
 
@@ -40,9 +45,18 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 // Route to build edit view by inventory id
 router.get("/edit/:invId", 
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
     utilities.handleErrors(invController.buildEditByInvId)
     );
+
+// Route to build delete view by inventory id
+router.get("/delete/:invId",
+    utilities.checkLogin,
+    authZ.employeePermission,
+    utilities.handleErrors(invController.buildDeleteByInvId)
+    );
+
 
 
 /*  **********************************
@@ -52,25 +66,40 @@ router.get("/edit/:invId",
 // Route for register a new classification
 router.post(
     "/inventory/add-classification",
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
+    invValidate.classificationRules(),
+    invValidate.checkClassData,
     utilities.handleErrors(invController.addClassification)
 );
 
 // Route to add a vehicle
 router.post(
     "/inventory/add-inventory",
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
+    invValidate.inventoryRules(),
+    invValidate.checkInventoryData,
     utilities.handleErrors(invController.addVehicle)
 );
 
 // Update vehicle data
 router.post(
     "/update/",
-    //utilities.checkLogin,
+    utilities.checkLogin,
+    authZ.employeePermission,
+    invValidate.inventoryRules(),
+    invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
 
+// Delete vehicle data
+router.post(
+    "/delete/",
+    utilities.checkLogin,
+    authZ.employeePermission,
+    utilities.handleErrors(invController.deleteInventory))
+
+
+
 module.exports = router;
-
-
-

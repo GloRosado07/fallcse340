@@ -180,33 +180,5 @@ validate.classificationRules = () => {
   next()
 }
 
-  /*  **********************************
-  *  Add new review Validation Rules
-  * ********************************* */
-
-  validate.addReviewRules = () => {
-    return [         
-        body("review_text")
-        .trim()
-        .escape()
-        .notEmpty()
-        .isLength({ min: 10 })
-        .withMessage("The review should have at least 10 characters."), // on error this message is sent.
-
-        body("account_id")
-        .trim()
-        .escape()
-        .notEmpty()
-        .withMessage("Invalid account."), // on error this message is sent.
-
-        body("inv_id")
-        .trim()
-        .escape()
-        .notEmpty()
-        .withMessage("Invalid article."), // on error this message is sent.
-
-    ]
-  }
-
 
 module.exports = validate

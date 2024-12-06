@@ -1,4 +1,6 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 
@@ -102,9 +104,8 @@ Util.buidErrorView = async function(message){
   return background
 }
 
-
 /* **************************************
-* Build the management view week4
+* Build the management view
 * ************************************ */
 Util.buildManagementView = async function(){
   let manageItems = '<div class=manageItems>'
@@ -118,7 +119,7 @@ Util.buildManagementView = async function(){
 }
 
 /* **************************************
-* Build the classification list week3
+* Build the classification list
 * ************************************ */
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
@@ -139,7 +140,6 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-
  /* ****************************************
  *  Check Login
  * ************************************ */
@@ -152,8 +152,68 @@ Util.buildClassificationList = async function (classification_id = null) {
   }
  }
 
+
 /* ****************************************
- * Word functions week3
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     res.locals.accountData = accountData
+     res.locals.loggedin = 1
+     next()
+    })
+  } else {
+   next()
+  }
+ }
+
+/* ************************
+ * Get JWT Token Info
+ ************************** */
+Util.getJWTInfo = async function (req, res, next) {
+  let JWTData
+  if (req.cookies.jwt) {
+    jwt.verify(
+     req.cookies.jwt,
+     process.env.ACCESS_TOKEN_SECRET,
+     function (err, accountData) {
+      if (err) {
+       console.log(err)
+      }
+      JWTData = accountData
+     })
+   } else {
+    JWTData = false
+   }
+  return JWTData
+}
+/* ************************
+ * Constructs Headers username
+ ************************** */
+Util.getUser = async function (req, res, next) {
+  let userData
+  let JWTData = await this.getJWTInfo(req)
+  
+  if (JWTData) {
+      userData = '<a href="/account/">Welcome ' + JWTData.account_firstname + '</a>'
+      userData += '<a title="Click to log out" href="/account/logout">Logout</a>'
+   } else {
+    userData = '<a title="Click to log in" href="/account/login">My Account</a>'
+   }
+  return userData
+}
+
+/* ****************************************
+ * Word functions
  **************************************** */
 function capitalizeWord(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -163,13 +223,11 @@ function createScreenName(firstname, lastname) {
   return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase() + lastname.slice(1)
 }
 
-//UP TO HERE WEEK 3//
-
-/* ****************************************
+ /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-  
+
 module.exports = Util

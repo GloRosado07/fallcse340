@@ -67,8 +67,6 @@ async function checkExistingClassification(classification_name) {
   }
 }
 
-//UP TO HERE WEEK 3//
-
 /* ***************************
  *  Add a new vehicle
  * ************************** */
@@ -136,11 +134,50 @@ async function updateVehicle(
   }
 }
 
-module.exports = {getClassifications, 
-  getInventoryByClassificationId, 
+
+/* ***************************
+ *  Delete a vehicle's data
+ * ************************** */
+async function deleteVehicle(
+  inv_id) {
+  try {
+    const sql = 'DELETE FROM inventory WHERE inv_id = $1'
+    const data = await pool.query(sql, [
+      inv_id])
+      return data
+  } catch (error) {
+    return "Delete Inventory Error"
+  }
+}
+
+/* ***************************
+ *  Get car reviews by inv_id
+ * ************************** */
+async function getReviewsByInvId(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT account.account_firstname, account.account_lastname, review.review_text, review.review_date
+      FROM public.review
+      INNER JOIN public.account
+        ON review.account_id = account.account_id
+      WHERE review.inv_id = $1`,
+      [inv_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getReviewsByInvId error " + error)
+  }
+}
+
+
+
+module.exports = {
+  getClassifications,
+  getInventoryByClassificationId,
   getCarDetailsByInvId,
   addClassification,
   checkExistingClassification,
   addVehicle,
-  updateVehicle
-};
+  updateVehicle,
+  deleteVehicle,
+}
