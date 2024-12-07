@@ -61,15 +61,13 @@ async function buildAccountRootView(req, res, next) {
 
   res.render("account/management", {
     title: "Account Management",
-    updateLink: `<a href="/account/edit/${userInformation.account_id}">Edit Account Information</a>`,
-    invManagement,
-    reviewManagement: null,
     errors: null,
     nav,
     userData,
     userName,
-    
-
+    updateLink,
+    invManagement,
+    reviewManagement
   })
 }
 
