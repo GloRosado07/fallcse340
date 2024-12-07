@@ -6,20 +6,16 @@
 
 <%- messages() %>
 
-<% if (errors) { %>
-  <ul class="notice">
- <% errors.array().forEach(error => { %>
-   <li><%= error.msg %></li>
-<%  }) %>
- </ul>
-<% } %>
-
-<h2>Welcome <%- userName %></h2>
-<div class="management-view">
-<span>You're logged in.</span>
-<%- updateLink %>
-</div>
-
 <%- invManagement %>
 
+<h2>Manage Inventory</h2>
+<p>Select a classification from the list</p>
+
+<%- classificationSelect %>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<script src="../../js/inventory.js"></script>
 
