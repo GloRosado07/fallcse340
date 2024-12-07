@@ -81,20 +81,4 @@ router.post(
   utilities.handleErrors(accountController.updatePassword)
 )
 
-// Route to edit a review
-router.post(
-  "/review/edit-review",
-  utilities.checkLogin,
-  regValidate.editReviewRules(),
-  regValidate.checkEditNewReview,
-  utilities.handleErrors(accountController.updateReview)
-);
-
-// Route to edit a review
-router.post(
-  "/review/delete-review",
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.deleteReview)
-);
-
 module.exports = router;
